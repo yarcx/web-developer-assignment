@@ -1,14 +1,16 @@
 import { useNavigate } from "react-router-dom";
+import type { FC } from "react";
+
 import { USER_TABLE_HEADER } from "../../utils/constants";
 import Loader from "../common/Loader";
-import type { FC } from "react";
 import type { User } from "../../utils/types";
 
 const UserTables: FC<{ usersLists?: User[]; isLoadingUsersList: boolean }> = ({
   usersLists,
   isLoadingUsersList,
 }) => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+    const isEmptyTableData = !isLoadingUsersList && !usersLists?.length;
   return (
     <div className="rounded-lg border border-border-100 overflow-x-auto">
       <table className="w-full table-auto md:table-fixed">
@@ -41,7 +43,15 @@ const UserTables: FC<{ usersLists?: User[]; isLoadingUsersList: boolean }> = ({
               </td>
             </tr>
           )}
-          {!isLoadingUsersList &&
+          {isEmptyTableData ? (
+            <tr>
+              <td colSpan={3} className="text-center">
+                <div className="flex items-center justify-center min-h-[288px]">
+                  You don't have any data yet
+                </div>
+              </td>
+            </tr>
+          ) : (
             usersLists?.map((user) => (
               <tr
                 key={user.email}
@@ -64,7 +74,8 @@ const UserTables: FC<{ usersLists?: User[]; isLoadingUsersList: boolean }> = ({
                   <p className="truncate w-[392px]">{user.username}</p>
                 </td>
               </tr>
-            ))}
+            ))
+          )}
         </tbody>
       </table>
     </div>

@@ -1,7 +1,7 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+
 import Button from "../components/common/Button";
 import LeftArrowIcon from "../assets/icons/LeftArrow";
-import AddCircle from "../assets/icons/AddCircle";
 import PostCard from "../components/common/PostCard";
 import { STATE_ACTIONS } from "../utils/constants";
 import AppLoader from "../components/AppLoader";
@@ -9,6 +9,7 @@ import useAppContext from "../hooks/useAppContext";
 import usePost from "../hooks/usePost";
 import ErrorFallback from "../components/ErrorFallback";
 import type { User } from "../utils/types";
+import AddPostButton from "../components/common/AddPostButton";
 
 const UserPost = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const UserPost = () => {
   const { postId } = useParams();
   const { state } = useLocation();
   const user: User = state || {};
+
   const {
     singlePostData,
     singlePostError,
@@ -25,11 +27,17 @@ const UserPost = () => {
   } = usePost({
     userId: postId!,
   });
-    const {email, name, } = user;
+  const { email, name } = user;
   const isLoading = isLoadingSinglePost || deletingPostLoading;
+
+  const handleOpenAddUserModal = () =>
+    openModal(STATE_ACTIONS.ADD_NEW_USER, {
+      userId: postId,
+    });
 
   if (singlePostError?.message) return <ErrorFallback />;
   if (isLoading) return <AppLoader />;
+
   return (
     <>
       <section className="flex flex-col gap-6">
@@ -51,19 +59,7 @@ const UserPost = () => {
         </header>
 
         <main className="grid sm:grid-cols-2 grid-cols-1 place-items-center md:grid-cols-3 gap-6">
-          <div
-            onClick={() =>
-              openModal(STATE_ACTIONS.ADD_NEW_USER, {
-                userId: postId,
-              })
-            }
-            className="h-[290px] w-[273px] cursor-pointer flex flex-col items-center justify-center rounded-md border-dashed border border-border-100 das"
-          >
-            <AddCircle />
-            <Button variant="ghost" className="text-app-500 font-medium">
-              New Post
-            </Button>
-          </div>
+          <AddPostButton handleOpenAddUserModal={handleOpenAddUserModal} />
           {singlePostData?.map((post, index) => (
             <PostCard
               key={post?.id + index}

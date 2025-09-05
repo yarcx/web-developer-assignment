@@ -26,7 +26,6 @@ const useUsers = () => {
   });
 
     const totalPages = usersListCount ? Math.ceil(usersListCount / usersPerPage) : 1;
-    console.log({ usersListCount, totalPages });
     
   const gotoPrev = () => {
     setPage((prev) => {

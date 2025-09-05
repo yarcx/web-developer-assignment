@@ -47,7 +47,7 @@ router.delete("/:id", async (req: Request, res: Response): Promise<any> => {
 
     if (!postId) {
       return res.status(400).json({
-        error: "Post ID is required",
+        error: "postId is required",
       });
     }
 
