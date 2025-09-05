@@ -25,6 +25,7 @@ const UserPost = () => {
   } = usePost({
     userId: postId!,
   });
+    const {email, name, } = user;
   const isLoading = isLoadingSinglePost || deletingPostLoading;
 
   if (singlePostError?.message) return <ErrorFallback />;
@@ -42,14 +43,14 @@ const UserPost = () => {
             <span>Back to Users</span>
           </Button>
 
-          <h3 className="font-medium text-app-100 text-4xl">{user?.name}</h3>
+          <h3 className="font-medium text-app-100 text-4xl">{name}</h3>
 
           <p className="text-app-200 font-normal text-sm">
-            {user?.email} • <span className="font-medium">{singlePostData?.length} Posts</span>{" "}
+            {email} • <span className="font-medium">{singlePostData?.length} Posts</span>{" "}
           </p>
         </header>
 
-        <main className="grid grid-cols-3 gap-6">
+        <main className="grid sm:grid-cols-2 grid-cols-1 place-items-center md:grid-cols-3 gap-6">
           <div
             onClick={() =>
               openModal(STATE_ACTIONS.ADD_NEW_USER, {

@@ -1,5 +1,6 @@
-import type {  UserWithAddress } from "../utils/types";
+import type { UserWithAddress } from "../utils/types";
 import { ENDPOINTS } from "./endpoints";
+import http from "./http";
 
 export const getUserLists = async ({
   pageNumber,
@@ -9,12 +10,9 @@ export const getUserLists = async ({
   pageSize: string;
 }): Promise<UserWithAddress[]> => {
   try {
-    const response = await fetch(ENDPOINTS.USERS(pageNumber, pageSize));
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = (await response.json());
-    return data;
+    return await http.get({
+      url: ENDPOINTS.USERS(pageNumber, pageSize),
+    });
   } catch (error) {
     console.error("Error fetching user count:", error);
     throw error;
@@ -23,12 +21,10 @@ export const getUserLists = async ({
 
 export const getUsersCount = async (): Promise<number> => {
   try {
-    const response = await fetch(ENDPOINTS.USERS_COUNT);
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = (await response.json()) as number;
-    return data;
+    const res = await http.get({
+      url: ENDPOINTS.USERS_COUNT,
+    });
+      return res?.count
   } catch (error) {
     console.error("Error fetching user count:", error);
     throw error;

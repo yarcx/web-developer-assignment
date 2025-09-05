@@ -3,7 +3,7 @@ import { addSinglePost, deleteSinglePost, getSinglePost } from "../services/post
 import { MUTATION_KEYS, QUERY_KEYS } from "../utils/constants";
 
 const usePost = ({ userId }: { userId: string }) => {
-    const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const {
     data: singlePostData,
     error: singlePostError,
@@ -17,12 +17,15 @@ const usePost = ({ userId }: { userId: string }) => {
   const { mutate: handleDeletePost, isPending: deletingPostLoading } = useMutation({
     mutationKey: [MUTATION_KEYS.DELETE_SINGLE_POST],
     mutationFn: (postId: string) => deleteSinglePost({ postId: postId! }),
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: [userId, QUERY_KEYS.GET_SINGLE_POST] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [userId, QUERY_KEYS.GET_SINGLE_POST] });
     },
   });
   const { mutate: addPost, isPending: isAdding } = useMutation({
     mutationFn: addSinglePost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [userId, QUERY_KEYS.GET_SINGLE_POST] });
+    },
   });
 
   return {

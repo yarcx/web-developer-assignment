@@ -3,28 +3,33 @@ import Button from "../common/Button";
 import { useState } from "react";
 import usePost from "../../hooks/usePost";
 import useAppContext from "../../hooks/useAppContext";
-import Loader from "../common/Loader";
+import SmallLoader from "../common/SmallLoader";
 
 const AddUserModal = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const {
     state: {
-      modalProps: { postId },
+      modalProps: { userId },
     },
+    closeModal,
   } = useAppContext();
   const { addPost, isAdding } = usePost({
-    userId: postId as string,
+    userId: userId as string,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-       addPost({ userId: postId as string, title, body: content });
+      addPost({ user_id: userId as string, title, body: content });
+      closeModal();
+      setContent("");
+      setTitle("");
     } catch (error) {
       console.log(error);
     }
   };
+  const isDisable = !title || !content;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -36,8 +41,9 @@ const AddUserModal = () => {
             type="text"
             placeholder="Give your post a title"
             value={title}
+            required
             onChange={(e) => setTitle(e.target.value)}
-            className="block w-full text-sm text-app-600 focus-visible:ring-none focus-within:ring-border-200 focus-within:!shadow-none  focus-visible:ring-app-secondary rounded-md border border-border-200 py-[10px] px-4 h-[40px]"
+            className="block w-full text-sm placeholder:text-app-600 focus-visible:ring-none focus-within:ring-border-200 focus-within:!shadow-none  focus-visible:ring-app-secondary rounded-md border border-border-200 py-[10px] px-4 h-[40px]"
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -46,8 +52,9 @@ const AddUserModal = () => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={6}
+            required
             placeholder="Write something mind-blowing"
-            className="block font-normal w-full text-sm text-app-600 focus-visible:ring-none focus-within:ring-border-200 focus-within:!shadow-none focus-visible:ring-app-secondary rounded-md border border-border-200 py-[10px] px-4 h-[179px]"
+            className="block font-normal w-full text-sm placeholder:text-app-600 focus-visible:ring-none focus-within:ring-border-200 focus-within:!shadow-none focus-visible:ring-app-secondary rounded-md border border-border-200 py-[10px] px-4 h-[179px]"
           />
         </div>
         <div className="flex gap-2 justify-end">
@@ -58,9 +65,11 @@ const AddUserModal = () => {
           </Dialog.Close>
           <Button
             type="submit"
-            className="border-border-200 border-[1px] text-white font-normal text-sm px-4"
+            disabled={isDisable}
+            className="border-border-200 flex items-center justify-center gap-x-2 border-[1px] text-white font-normal text-sm px-4"
           >
-            {isAdding ? "Publishing" : "Publish"} {isAdding ? <Loader /> : null}
+            <span>{isAdding ? "Publishing" : "Publish"}</span>
+            {isAdding ? <SmallLoader /> : null}
           </Button>
         </div>
       </Dialog.Content>

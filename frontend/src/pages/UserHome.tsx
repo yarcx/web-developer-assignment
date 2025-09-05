@@ -5,14 +5,13 @@ import Pagination from "../components/common/Pagination";
 const UserHome = () => {
   const {
     usersList,
-    userListsError,
     isLoadingUsersList,
     currentPage,
     gotoPrev,
     gotoNext,
     gotoPage,
+    paginationItems,
   } = useUsers();
-  console.log({ usersList, userListsError, isLoadingUsersList });
 
   return (
     <div className="flex flex-col gap-6">
@@ -25,6 +24,7 @@ const UserHome = () => {
         gotoPrev={gotoPrev}
         gotoNext={gotoNext}
         gotoPage={gotoPage}
+        paginationItems={paginationItems}
       />
     </div>
   );

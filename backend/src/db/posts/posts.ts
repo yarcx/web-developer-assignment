@@ -43,18 +43,19 @@ export const deletePost = (postId: string): Promise<boolean> =>
   });
 
 export const createPost = (newPost: NewPost): Promise<Post> =>
-  new Promise((resolve, reject) => {
-    if (!newPost.title?.trim()) {
+    new Promise((resolve, reject) => {
+      console.log({ newPost  });
+    if (!newPost.title) {
       reject(new Error("Title is required"));
       return;
     }
 
-    if (!newPost.body?.trim()) {
+    if (!newPost.body) {
       reject(new Error("Body is required"));
       return;
     }
 
-    if (!newPost.user_id?.trim()) {
+    if (!newPost.user_id) {
       reject(new Error("User ID is required"));
       return;
     }
@@ -65,8 +66,8 @@ export const createPost = (newPost: NewPost): Promise<Post> =>
     const post: Post = {
       id: postId,
       user_id: newPost.user_id,
-      title: newPost.title.trim(),
-      body: newPost.body.trim(),
+      title: newPost.title,
+      body: newPost.body,
       created_at: createdAt,
     };
 

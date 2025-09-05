@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import config from "config";
 import postsRouter from "./routes/posts";
 import usersRouter from "./routes/users";
+import bodyParser from 'body-parser'
 const port = config.get("port") as number;
 
 const app: Application = express();
@@ -14,6 +15,9 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+const jsonParser = bodyParser.json();
+app.use(jsonParser);
 
 app.use("/posts", postsRouter);
 app.use("/users", usersRouter);

@@ -26,6 +26,7 @@ const useUsers = () => {
   });
 
     const totalPages = usersListCount ? Math.ceil(usersListCount / usersPerPage) : 1;
+    console.log({ usersListCount, totalPages });
     
   const gotoPrev = () => {
     setPage((prev) => {
@@ -49,13 +50,36 @@ const useUsers = () => {
     if (!isNaN(pageNumber)) {
       if (pageNumber < 1) {
         setPage(1);
-      } else if (pageNumber >= totalPages) {
+      } else if (pageNumber > totalPages) {
         setPage(totalPages - 1);
       } else {
         setPage(pageNumber);
       }
     }
   };
+    const generatePaginationItems = (): (number | string)[] => {
+      if (totalPages <= 7) {
+        return Array.from({ length: totalPages }, (_, i) => i + 1);
+      }
+        
+      const items: (number | string)[] = [
+        1,
+        2,
+        3,
+        "...",
+        totalPages - 2,
+        totalPages - 1,
+        totalPages,
+      ];
+
+      if (page > 3 && page  < totalPages - 2) {
+        items[3] = page + 1; 
+      }
+
+      return items;
+    };
+
+    const paginationItems = generatePaginationItems();
 
   return {
     usersList,
@@ -67,7 +91,7 @@ const useUsers = () => {
     currentPage: page,
     gotoPrev,
     gotoNext,
-    gotoPage,
+    gotoPage,paginationItems
   };
 };
 

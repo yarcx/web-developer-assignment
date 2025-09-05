@@ -15,6 +15,7 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 router.post("/", async (req, res) => {
+    console.log({ body: req });
   try {
     const { title, body, user_id }: NewPost = req.body;
 

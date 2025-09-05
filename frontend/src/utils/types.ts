@@ -36,12 +36,12 @@ export interface Post {
   created_at: string;
 }
 
-
 export interface PaginationProps {
   currentPage: number;
   gotoPrev: () => void;
   gotoNext: () => void;
   gotoPage: (pageNumber: number) => void;
+  paginationItems: (string | number)[];
 }
 export interface Address {
   id: string;
@@ -54,4 +54,26 @@ export interface Address {
 
 export interface UserWithAddress extends User {
   address: Address;
+}
+
+export interface IDelete {
+  url: string;
+}
+
+export interface IPost<T = Record<string, unknown>> extends IDelete {
+  body?: T;
+}
+
+export type IPatch<T = Record<string, unknown>> = IPost<T>;
+
+export type IPut<T = Record<string, unknown>> = IPost<T>;
+
+export interface IGet<T = Record<string, unknown>> extends IDelete {
+  query?: T;
+}
+
+export interface INewPost {
+  user_id: string;
+  title: string;
+  body: string;
 }

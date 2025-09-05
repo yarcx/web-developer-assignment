@@ -1,10 +1,10 @@
-import { cn, PAGINATION_DATA } from "../../utils/constants";
+import { cn } from "../../utils/constants";
 import Button from "./Button";
 import LeftArrow from "../../assets/icons/LeftArrow";
 import RightArrow from "../../assets/icons/RightArrow";
 import type { PaginationProps } from "../../utils/types";
 
-const Pagination = ({ currentPage, gotoPrev, gotoNext, gotoPage }: PaginationProps) => {
+const Pagination = ({ currentPage, gotoPrev, gotoNext, gotoPage, paginationItems }: PaginationProps) => {
   return (
     <div className="flex justify-end">
       <nav
@@ -20,7 +20,7 @@ const Pagination = ({ currentPage, gotoPrev, gotoNext, gotoPage }: PaginationPro
         >
           <span>Previous</span>
         </Button>
-        {PAGINATION_DATA.map((item, index) => {
+        {paginationItems.map((item, index) => {
           const isActive = item === currentPage;
           const isEllipsis = item === "...";
           const isMiddleHighlight = isEllipsis && currentPage > 3 && currentPage < 8;
@@ -45,7 +45,7 @@ const Pagination = ({ currentPage, gotoPrev, gotoNext, gotoPage }: PaginationPro
           variant="ghost"
           onClick={gotoNext}
           className="font-semibold text-app-200  ml-2 md:ml-5 pr-0"
-          disabled={currentPage === 10}
+          disabled={currentPage === paginationItems[paginationItems.length -1]}
         >
           <span>Next</span>
         </Button>
