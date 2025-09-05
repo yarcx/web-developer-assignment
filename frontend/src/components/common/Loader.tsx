@@ -1,6 +1,6 @@
-const Loader = ({size}: {size: number}) => {
+const Loader = () => {
   return (
-    <div style={{width: `${size}px` , height: `${size}px`}} className="lds-ellipsis">
+    <div className="lds-ellipsis">
       <div></div>
       <div></div>
       <div></div>
