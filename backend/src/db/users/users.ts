@@ -6,7 +6,7 @@ import {
   selectUsersTemplate,
   selectUserWithAddressTemplate,
 } from "./query-templates";
-import { Address, User, UserWithAddress } from "./types";
+import { Address, User, UserWithAddress, UserWithAddressResponse } from "./types";
 
 export const getUsersCount = (): Promise<number> =>
   new Promise((resolve, reject) => {
@@ -18,10 +18,7 @@ export const getUsersCount = (): Promise<number> =>
     });
   });
 
-export const getUsersWithAddress = (
-  pageNumber: number,
-  pageSize: number
-): Promise<User[]> =>
+export const getUsersWithAddress = (pageNumber: number, pageSize: number): Promise<User[]> =>
   new Promise((resolve, reject) => {
     connection.all<User>(
       selectUsersTemplate,
@@ -35,7 +32,7 @@ export const getUsersWithAddress = (
     );
   });
 
-export const getUsers = (pageNumber: number, pageSize: number): Promise<UserWithAddress[]> =>
+export const getUsers = (pageNumber: number, pageSize: number): Promise<UserWithAddressResponse[]> =>
   new Promise((resolve, reject) => {
     connection.all<UserWithAddress>(
       selectUserWithAddressTemplate,
@@ -44,22 +41,24 @@ export const getUsers = (pageNumber: number, pageSize: number): Promise<UserWith
         if (error) {
           reject(error);
         }
-        const usersWithAddresses = results?.map((row) => ({
-          id: row?.id,
-          name: row?.name,
-          username: row?.username,
-          email: row?.email,
-          phone: row?.phone,
-          address: {
-            id: row?.address?.id,
-            user_id: row?.address?.id,
-            street: row?.address?.street,
-            state: row?.address?.state,
-            city: row?.address?.city,
-            zipcode: row?.address?.zipcode,
-          },
-        }));
-          
+        const usersWithAddresses = results?.map((row) => {
+          return {
+            id: row?.id,
+            name: row?.name,
+            username: row?.username,
+            email: row?.email,
+            phone: row?.phone,
+            address: {
+              id: row?.address_id,
+              user_id: row?.id,
+              street: row?.street,
+              state: row?.state,
+              city: row?.city,
+              zipcode: row?.zipcode,
+            },
+          };
+        });
+
         resolve(usersWithAddresses);
       }
     );

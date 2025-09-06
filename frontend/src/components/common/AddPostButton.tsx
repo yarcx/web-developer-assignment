@@ -5,7 +5,7 @@ const AddPostButton = ({ handleOpenAddUserModal }: { handleOpenAddUserModal: () 
   return (
     <div
       onClick={() => handleOpenAddUserModal()}
-      className="h-[290px] w-[273px] cursor-pointer flex flex-col items-center justify-center rounded-md border-dashed border border-border-100 das"
+      className="h-[290px] w-[273px] cursor-pointer flex flex-col items-center justify-center rounded-md border-dashed border-[2px] border-border-100 das"
     >
       <AddCircle />
       <Button variant="ghost" className="text-app-500 font-medium">

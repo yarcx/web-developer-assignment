@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import type { FC } from "react";
 
-import { USER_TABLE_HEADER } from "../../utils/constants";
+import { formatAddress, USER_TABLE_HEADER } from "../../utils/constants";
 import Loader from "../common/Loader";
 import type { User } from "../../utils/types";
 
@@ -71,7 +71,7 @@ const UserTables: FC<{ usersLists?: User[]; isLoadingUsersList: boolean }> = ({
                   <p className="truncate">{user.email}</p>
                 </td>
                 <td className="text-sm font-normal w-full text-app-200 text-left px-6 py-3 overflow-hidden">
-                  <p className="truncate w-[392px]">{user.username}</p>
+                  <p className="truncate w-[392px]">{formatAddress(user.address)}</p>
                 </td>
               </tr>
             ))

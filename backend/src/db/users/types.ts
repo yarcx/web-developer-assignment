@@ -21,6 +21,10 @@ export interface Address {
   zipcode: string;
 }
 
-export interface UserWithAddress extends User {
-  address: Address;
+export interface UserWithAddress extends User, Omit<Address, "id"> {
+  address_id: string
+}
+
+export interface UserWithAddressResponse extends User {
+  address: Omit<Address, "id" | 'user_id'>;
 }

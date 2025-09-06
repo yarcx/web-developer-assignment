@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { IState } from "./types";
+import type { Address, IState } from "./types";
 
 export const USER_TABLE_HEADER = ["Full Name", "Email Address", "Address"];
 
@@ -60,3 +60,6 @@ export const QUERY_KEYS = {
 export const MUTATION_KEYS = {
   DELETE_SINGLE_POST: "deleteSinglePost",
 };
+export const formatAddress = (address: Address) => {
+    return `${address.street}, ${address.state}, ${address.city}, ${address.zipcode}`;
+}

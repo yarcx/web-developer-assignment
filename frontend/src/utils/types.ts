@@ -20,6 +20,7 @@ export interface User {
   username: string;
   email: string;
   phone: string;
+  address: Address;
 }
 
 export type Pagination = {
