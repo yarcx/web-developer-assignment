@@ -1,16 +1,24 @@
 import { useNavigate } from "react-router-dom";
 import type { FC } from "react";
 
-import { formatAddress, USER_TABLE_HEADER } from "../../utils/constants";
+import { USER_TABLE_HEADER } from "../../utils/constants";
 import Loader from "../common/Loader";
 import type { User } from "../../utils/types";
+import TableRow from "./TableRow";
 
 const UserTables: FC<{ usersLists?: User[]; isLoadingUsersList: boolean }> = ({
   usersLists,
   isLoadingUsersList,
 }) => {
-    const navigate = useNavigate();
-    const isEmptyTableData = !isLoadingUsersList && !usersLists?.length;
+  const navigate = useNavigate();
+  const handleRowClick = (user: User) => {
+    navigate("/" + user.id, {
+      state: {
+        ...user,
+      },
+    });
+  };
+  const isEmptyTableData = !isLoadingUsersList && !usersLists?.length;
   return (
     <div className="rounded-lg border border-border-100 overflow-x-auto">
       <table className="w-full table-auto md:table-fixed">
@@ -53,27 +61,7 @@ const UserTables: FC<{ usersLists?: User[]; isLoadingUsersList: boolean }> = ({
             </tr>
           ) : (
             usersLists?.map((user) => (
-              <tr
-                key={user.email}
-                onClick={() => {
-                  navigate("/" + user.id, {
-                    state: {
-                      ...user,
-                    },
-                  });
-                }}
-                className="not-last:border-b border-border-100 h-[72px] cursor-pointer"
-              >
-                <td className="text-sm  font-medium text-app-200 text-left px-6 py-3">
-                  <p className="truncate">{user.name}</p>
-                </td>
-                <td className="text-sm  font-normal text-app-200 text-left px-6 py-3">
-                  <p className="truncate">{user.email}</p>
-                </td>
-                <td className="text-sm font-normal w-full text-app-200 text-left px-6 py-3 overflow-hidden">
-                  <p className="truncate w-[392px]">{formatAddress(user.address)}</p>
-                </td>
-              </tr>
+              <TableRow key={user?.id} user={user} handleRowClick={handleRowClick} />
             ))
           )}
         </tbody>

@@ -6,16 +6,16 @@
 }
 
 @theme inline {
-    --color-app-primary: #4f46e5;
-    --color-app-secondary: #F9F5FF;
-    --color-app-100: #181D27;
-    --color-app-200: #535862;
-    --color-app-300: #D5D7DA;
-    --color-app-400: #334155;
-    --color-app-500: #717680;
-    --color-app-600: #94A3B8;
-    --color-border-100: #E9EAEB;
-    --color-border-200: #E2E8F0;
+  --color-app-primary: #4f46e5;
+  --color-app-secondary: #f9f5ff;
+  --color-app-100: #181d27;
+  --color-app-200: #535862;
+  --color-app-300: #d5d7da;
+  --color-app-400: #334155;
+  --color-app-500: #717680;
+  --color-app-600: #94a3b8;
+  --color-border-100: #e9eaeb;
+  --color-border-200: #e2e8f0;
 }
 
 .lds-ellipsis {
@@ -79,4 +79,11 @@
   100% {
     transform: translate(24px, 0);
   }
+}
+
+.overflowText {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient: vertical;
 }

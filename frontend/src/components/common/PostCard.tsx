@@ -20,7 +20,7 @@ const PostCard = ({
           <DeleteBin />
         </Button>
         <h4 className="font-medium text-lg text-app-200 w-[201px]">{title}</h4>
-        <div className="h-auto">
+        <div className="overflowText">
           <p className="text-app-200 font-normal text-sm">{body}</p>
         </div>
       </div>
