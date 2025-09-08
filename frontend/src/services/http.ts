@@ -10,6 +10,8 @@ const httpConfig = () => {
     headers: {
       "Content-Type": "application/json",
       "ngrok-skip-browser-warning": true,
+      "Access-Control-Allow-Credentials": true,
+      "Access-Control-Allow-Origin": "https://presley-unbehaving-ollie.ngrok-free.app",
     },
   };
   const http = axios.create(options);
