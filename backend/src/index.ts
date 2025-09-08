@@ -1,5 +1,6 @@
 import express, { Application } from "express";
 import config from "config";
+import cors from "cors";
 import postsRouter from "./routes/posts";
 import usersRouter from "./routes/users";
 import bodyParser from 'body-parser'
@@ -18,6 +19,12 @@ app.use((req, res, next) => {
 
 const jsonParser = bodyParser.json();
 app.use(jsonParser);
+app.use(
+  cors({
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  })
+);
 app.use("/posts", postsRouter);
 app.use("/users", usersRouter);
 
