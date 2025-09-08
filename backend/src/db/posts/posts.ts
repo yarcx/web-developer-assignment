@@ -44,7 +44,6 @@ export const deletePost = (postId: string): Promise<boolean> =>
 
 export const createPost = (newPost: NewPost): Promise<Post> =>
     new Promise((resolve, reject) => {
-      console.log({ newPost  });
     if (!newPost.title) {
       reject(new Error("Title is required"));
       return;
