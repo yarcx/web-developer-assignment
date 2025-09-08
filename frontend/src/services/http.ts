@@ -1,21 +1,22 @@
-import axios, { type CreateAxiosDefaults } from 'axios';
-import QueryString from 'query-string';
+import axios, { type CreateAxiosDefaults } from "axios";
+import QueryString from "query-string";
 
-import { BASE_URL } from './env';
-import type { IDelete, IGet, IPatch, IPost, IPut } from '../utils/types';
+import { BASE_URL } from "./env";
+import type { IDelete, IGet, IPatch, IPost, IPut } from "../utils/types";
 
 const httpConfig = () => {
   const options: CreateAxiosDefaults = {
     baseURL: BASE_URL,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": true,
     },
   };
   const http = axios.create(options);
 
   const httpMultipart = axios.create({
     ...options,
-    headers: { ...options.headers, 'Content-Type': 'multipart/form-data' },
+    headers: { ...options.headers, "Content-Type": "multipart/form-data" },
   });
 
   return {
