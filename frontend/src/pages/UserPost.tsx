@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import Button from "../components/common/Button";
 import LeftArrowIcon from "../assets/icons/LeftArrow";
@@ -8,26 +8,20 @@ import AppLoader from "../components/AppLoader";
 import useAppContext from "../hooks/useAppContext";
 import usePost from "../hooks/usePost";
 import ErrorFallback from "../components/ErrorFallback";
-import type { User } from "../utils/types";
 import AddPostButton from "../components/common/AddPostButton";
 
 const UserPost = () => {
   const navigate = useNavigate();
   const { openModal } = useAppContext();
-  const { postId } = useParams();
-  const { state } = useLocation();
-  const user: User = state || {};
+  const { postId } = useParams();;
 
-  const {
-    singlePostData,
-    singlePostError,
-    isLoadingSinglePost,
-    deletingPostLoading,
-  } = usePost({
+  const { singlePostData, singlePostError, isLoadingSinglePost, deletingPostLoading } = usePost({
     userId: postId!,
   });
-  const { email, name } = user;
   const isLoading = isLoadingSinglePost || deletingPostLoading;
+  const [searchParams] = useSearchParams();
+  const name = searchParams.get("name");
+  const email = searchParams.get("email");
 
   const handleOpenModal = (modalType: string, postIdToDelete?: string) => {
     openModal(modalType, {

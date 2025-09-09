@@ -9,9 +9,10 @@ import { Post, NewPost } from "./types";
 import { v4 as uuidv4 } from "uuid";
 
 export const getPosts = (userId: string): Promise<Post[]> =>
-  new Promise((resolve, reject) => {
+    new Promise((resolve, reject) => {
+
     connection.all(selectPostsTemplate, [userId], (error, results) => {
-      if (error) {
+        if (error) {
         reject(error);
       }
       resolve(results as Post[]);

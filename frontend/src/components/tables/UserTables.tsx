@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import type { FC } from "react";
 
-import { USER_TABLE_HEADER } from "../../utils/constants";
 import Loader from "../common/Loader";
 import type { User } from "../../utils/types";
 import TableRow from "./TableRow";
+import TableHeader from "./TableHeader";
 
 const UserTables: FC<{ usersLists?: User[]; isLoadingUsersList: boolean }> = ({
   usersLists,
@@ -12,34 +12,13 @@ const UserTables: FC<{ usersLists?: User[]; isLoadingUsersList: boolean }> = ({
 }) => {
   const navigate = useNavigate();
   const handleRowClick = (user: User) => {
-    navigate("/" + user.id, {
-      state: {
-        ...user,
-      },
-    });
+      navigate(`/${user.id}?email=${user?.email}&name=${user?.name}`);
   };
   const isEmptyTableData = !isLoadingUsersList && !usersLists?.length;
   return (
     <div className="rounded-lg border border-border-100 overflow-x-auto">
       <table className="w-full table-auto md:table-fixed">
-        <thead>
-          <tr>
-            {USER_TABLE_HEADER.map((header) => (
-              <th
-                key={header}
-                className={`text-xs font-medium text-app-200 text-left px-6 py-3 ${
-                  header === USER_TABLE_HEADER[0]
-                    ? "w-[22%]"
-                    : header === USER_TABLE_HEADER[2]
-                    ? "w-[392px]"
-                    : "w-auto"
-                }`}
-              >
-                {header}
-              </th>
-            ))}
-          </tr>
-        </thead>
+        <TableHeader />
 
         <tbody>
           {isLoadingUsersList && (
