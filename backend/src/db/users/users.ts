@@ -14,6 +14,7 @@ export const getUsersCount = (): Promise<number> =>
       if (error) {
         reject(error);
       }
+        
       resolve(results.count);
     });
   });
@@ -32,7 +33,10 @@ export const getUsersWithAddress = (pageNumber: number, pageSize: number): Promi
     );
   });
 
-export const getUsers = (pageNumber: number, pageSize: number): Promise<UserWithAddressResponse[]> =>
+export const getUsers = (
+  pageNumber: number,
+  pageSize: number
+): Promise<UserWithAddressResponse[]> =>
   new Promise((resolve, reject) => {
     connection.all<UserWithAddress>(
       selectUserWithAddressTemplate,

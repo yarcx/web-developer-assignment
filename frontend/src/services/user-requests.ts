@@ -24,7 +24,8 @@ export const getUsersCount = async (): Promise<number> => {
     const res = await http.get({
       url: ENDPOINTS.USERS_COUNT,
     });
-      return res?.count
+
+    return res?.count;
   } catch (error) {
     console.error("Error fetching user count:", error);
     throw error;
