@@ -18,7 +18,6 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.get("/count", async (req: Request, res: Response) => {
   const count = await getUsersCount();
-  res.send({ count });
 });
 
 export default router;

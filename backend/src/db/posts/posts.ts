@@ -1,3 +1,4 @@
+import { reverse } from "dns";
 import { connection } from "../connection";
 import {
   deletePostTemplate,
@@ -9,10 +10,9 @@ import { Post, NewPost } from "./types";
 import { v4 as uuidv4 } from "uuid";
 
 export const getPosts = (userId: string): Promise<Post[]> =>
-    new Promise((resolve, reject) => {
-
+  new Promise((resolve, reject) => {
     connection.all(selectPostsTemplate, [userId], (error, results) => {
-        if (error) {
+      if (error) {
         reject(error);
       }
       resolve(results as Post[]);
@@ -44,7 +44,7 @@ export const deletePost = (postId: string): Promise<boolean> =>
   });
 
 export const createPost = (newPost: NewPost): Promise<Post> =>
-    new Promise((resolve, reject) => {
+  new Promise((resolve, reject) => {
     if (!newPost.title) {
       reject(new Error("Title is required"));
       return;
