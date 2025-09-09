@@ -53,7 +53,7 @@ const UserPost = () => {
           </p>
         </header>
 
-        <main className="grid sm:grid-cols-2 grid-cols-1 place-items-center md:grid-cols-3 gap-6">
+        <main className="grid sm:grid-cols-2 grid-cols-1 place-items-center md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AddPostButton
             handleOpenAddUserModal={() => handleOpenModal(STATE_ACTIONS.ADD_NEW_USER)}
           />
