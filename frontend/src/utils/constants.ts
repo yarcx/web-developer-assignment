@@ -42,6 +42,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const STATE_ACTIONS = {
   ADD_NEW_USER: "add_new_user",
+  DELETE_POST: "delete_post",
   CLOSE_MODAL: "close_modal",
 };
 

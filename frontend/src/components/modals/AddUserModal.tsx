@@ -4,6 +4,7 @@ import { useState } from "react";
 import usePost from "../../hooks/usePost";
 import useAppContext from "../../hooks/useAppContext";
 import SmallLoader from "../common/SmallLoader";
+import { cn } from "../../utils/constants";
 
 const AddUserModal = () => {
   const [title, setTitle] = useState("");
@@ -12,7 +13,6 @@ const AddUserModal = () => {
     state: {
       modalProps: { userId },
     },
-    closeModal,
   } = useAppContext();
   const { addPost, isAdding } = usePost({
     userId: userId as string,
@@ -22,10 +22,9 @@ const AddUserModal = () => {
     e.preventDefault();
     try {
       addPost({ user_id: userId as string, title, body: content });
-      closeModal();
       setContent("");
       setTitle("");
-    } catch (error) {
+    } catch (error: unknown) {
       console.log(error);
     }
   };
@@ -41,9 +40,12 @@ const AddUserModal = () => {
             type="text"
             placeholder="Give your post a title"
             value={title}
+            maxLength={60}
             required
             onChange={(e) => setTitle(e.target.value)}
-            className="block w-full text-sm placeholder:text-app-600 focus-visible:ring-none focus-within:ring-border-200 focus-within:!shadow-none  focus-visible:ring-app-secondary rounded-md border border-border-200 py-[10px] px-4 h-[40px]"
+            className={cn(
+              "block w-full text-sm placeholder:text-app-600 focus-visible:ring-none focus-within:ring-border-200 focus-within:!shadow-none  focus-visible:ring-app-secondary rounded-md border border-border-200 py-[10px] px-4 h-[40px]"
+            )}
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -53,6 +55,7 @@ const AddUserModal = () => {
             onChange={(e) => setContent(e.target.value)}
             rows={6}
             required
+            maxLength={400}
             placeholder="Write something mind-blowing"
             className="block font-normal w-full text-sm placeholder:text-app-600 focus-visible:ring-none focus-within:ring-border-200 focus-within:!shadow-none focus-visible:ring-app-secondary rounded-md border border-border-200 py-[10px] px-4 h-[179px]"
           />
@@ -66,10 +69,10 @@ const AddUserModal = () => {
           <Button
             type="submit"
             disabled={isDisable}
+            rightIcon={isAdding ? <SmallLoader /> : null}
             className="border-border-200 flex items-center justify-center gap-x-2 border-[1px] text-white font-normal text-sm px-4"
           >
             <span>{isAdding ? "Publishing" : "Publish"}</span>
-            {isAdding ? <SmallLoader /> : null}
           </Button>
         </div>
       </Dialog.Content>

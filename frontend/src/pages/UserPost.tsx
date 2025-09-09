@@ -22,7 +22,6 @@ const UserPost = () => {
     singlePostData,
     singlePostError,
     isLoadingSinglePost,
-    handleDeletePost,
     deletingPostLoading,
   } = usePost({
     userId: postId!,
@@ -30,10 +29,12 @@ const UserPost = () => {
   const { email, name } = user;
   const isLoading = isLoadingSinglePost || deletingPostLoading;
 
-  const handleOpenAddUserModal = () =>
-    openModal(STATE_ACTIONS.ADD_NEW_USER, {
+  const handleOpenModal = (modalType: string, postIdToDelete?: string) => {
+    openModal(modalType, {
       userId: postId,
+      postIdToDelete,
     });
+  };
 
   if (singlePostError?.message) return <ErrorFallback />;
   if (isLoading) return <AppLoader />;
@@ -59,12 +60,14 @@ const UserPost = () => {
         </header>
 
         <main className="grid sm:grid-cols-2 grid-cols-1 place-items-center md:grid-cols-3 gap-6">
-          <AddPostButton handleOpenAddUserModal={handleOpenAddUserModal} />
+          <AddPostButton
+            handleOpenAddUserModal={() => handleOpenModal(STATE_ACTIONS.ADD_NEW_USER)}
+          />
           {singlePostData?.map((post, index) => (
             <PostCard
               key={post?.id + index}
               post={post}
-              handleDeletePost={(id: string) => handleDeletePost(id)}
+              handleDeletePost={() => handleOpenModal(STATE_ACTIONS.DELETE_POST, `${post?.id}`)}
             />
           ))}
         </main>

@@ -1,27 +1,9 @@
 import { useMemo, useReducer, type FC, type ReactNode } from "react";
-import type { IState } from "../utils/types";
+
 import { initialState, STATE_ACTIONS } from "../utils/constants";
 import { AppContextStore } from "../contexts/AppContext";
+import { reducer } from "../store/reducers";
 
-const reducer = (state: IState, action: { type: string; payload: Record<string, unknown> }) => {
-  switch (action.type) {
-    case STATE_ACTIONS.ADD_NEW_USER:
-      return {
-        ...state,
-        isModalOpen: true,
-        modalType: STATE_ACTIONS.ADD_NEW_USER,
-        modalProps: action.payload,
-      };
-    case STATE_ACTIONS.CLOSE_MODAL:
-      return {
-        ...state,
-        isModalOpen: false,
-        modalType: "",
-      };
-    default:
-      return state;
-  }
-};
 const AppContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 

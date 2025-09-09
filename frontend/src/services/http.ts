@@ -11,7 +11,7 @@ const httpConfig = () => {
       "Content-Type": "application/json",
       "ngrok-skip-browser-warning": true,
       "Access-Control-Allow-Credentials": true,
-      "Access-Control-Allow-Origin": "https://web-developer-assignment-omega.vercel.app/",
+      "Access-Control-Allow-Origin": "*",
     },
   };
   const http = axios.create(options);

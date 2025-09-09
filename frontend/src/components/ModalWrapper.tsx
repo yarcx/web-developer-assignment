@@ -2,9 +2,11 @@ import { Dialog } from "radix-ui";
 import useAppContext from "../hooks/useAppContext";
 import AddUserModal from "./modals/AddUserModal";
 import { STATE_ACTIONS } from "../utils/constants";
+import DeletePostModal from "./modals/DeletePostModal";
 
 const SelectedModal = {
-  [STATE_ACTIONS.ADD_NEW_USER]: <AddUserModal />,
+    [STATE_ACTIONS.ADD_NEW_USER]: <AddUserModal />,
+    [STATE_ACTIONS.DELETE_POST]: <DeletePostModal />
 };
 
 const ModalWrapper = () => {
@@ -12,7 +14,6 @@ const ModalWrapper = () => {
     state: { isModalOpen, modalType },
     closeModal,
   } = useAppContext();
-
   const SelectedActiveModal = SelectedModal[modalType];
 
   return (
